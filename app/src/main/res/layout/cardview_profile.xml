@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvFragmentProfile"
+    android:layout_width="@dimen/cv_profile_width"
+    android:layout_height="@dimen/cv_profile_height"
+    style="@style/CardView.Light"
+    app:cardCornerRadius="@dimen/cv_profile_corner_rad"
+    android:elevation="3dp"
+    android:layout_marginStart="@dimen/cv_profile_margin_start"
+    android:layout_marginEnd="@dimen/cv_profile_margin_end"
+    android:layout_marginLeft="@dimen/cv_profile_margin_start"
+    android:layout_marginRight="@dimen/cv_profile_margin_end">
+    
+
+
+    <ImageView
+        android:id="@+id/ivPetPic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dog_01"/>
+
+    <ImageView
+        android:id="@+id/ivFacBtn"
+        android:layout_width="@dimen/cv_profile_image_width"
+        android:layout_height="@dimen/cv_profile_image_height"
+        android:layout_gravity="bottom|end"
+        android:background="@drawable/ic_red_favorite_24"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"/>
+
+    <TextView
+        android:id="@+id/tvLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/p_likes"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF" />
+
+
+</androidx.cardview.widget.CardView>
