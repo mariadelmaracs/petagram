@@ -1,48 +1,69 @@
 package com.example.petagram.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.petagram.R;
-import com.example.petagram.adapter.PetAdapter;
 import com.example.petagram.adapter.ProfileAdapter;
+import com.example.petagram.model.PetResponse;
+import com.example.petagram.pojo.PetItem;
 import com.example.petagram.pojo.ProfileItem;
+import com.example.petagram.presenter.IProfileFragmentPresenter;
+import com.example.petagram.presenter.ProfileFragmentPresenter;
+import com.example.petagram.restAPI.EndpointsAPI;
+import com.example.petagram.restAPI.adapter.RestApiAdapter;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class FragmentProfile extends Fragment {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private ArrayList<ProfileItem> profileItems = new ArrayList<>();
+public class FragmentProfile extends Fragment implements IProfileFragmentView {
+
+    private IProfileFragmentPresenter iProfileFragmentPresenter;
+    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        iProfileFragmentPresenter = new ProfileFragmentPresenter(this, getContext());
+        recyclerView = view.findViewById(R.id.recyclerViewFragmentProfile);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(new ProfileAdapter(profileItems, getActivity()));
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-
-        profileItems.add(new ProfileItem(R.drawable.dog09, "10"));
-        profileItems.add(new ProfileItem(R.drawable.dog10, "25"));
-        profileItems.add(new ProfileItem(R.drawable.dog11, "13"));
-        profileItems.add(new ProfileItem(R.drawable.dog12, "28"));
-        profileItems.add(new ProfileItem(R.drawable.dog13, "41"));
-        profileItems.add(new ProfileItem(R.drawable.dog14, "21"));
-        profileItems.add(new ProfileItem(R.drawable.dog04, "33"));
-        profileItems.add(new ProfileItem(R.drawable.dog16, "16"));
-        profileItems.add(new ProfileItem(R.drawable.dog17, "26"));
-
+        //recyclerView.setHasFixedSize(true);
+        //recyclerView.setAdapter(new ProfileAdapter(profileItems, getActivity()));
+        //recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
+    }
+
+    @Override
+    public void generateGridLayout() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerView.setLayoutManager(gridLayoutManager);
+    }
+
+    @Override
+    public ProfileAdapter createAdapter(ArrayList<ProfileItem> profileItems) {
+        ProfileAdapter profileAdapter = new ProfileAdapter(profileItems, getActivity());
+        return profileAdapter;
+    }
+
+    @Override
+    public void initializeAdapter(ProfileAdapter profileAdapter) {
+        recyclerView.setAdapter(profileAdapter);
     }
 }

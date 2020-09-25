@@ -1,6 +1,8 @@
 package com.example.petagram.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +11,21 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.petagram.Detail;
 import com.example.petagram.R;
 import com.example.petagram.pojo.ProfileItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
     private ArrayList<ProfileItem> profileItems;
-    private Context context;
+    private Activity activity;
 
-    public ProfileAdapter(ArrayList<ProfileItem> profileItems, Context context) {
+    public ProfileAdapter(ArrayList<ProfileItem> profileItems, Activity activity) {
         this.profileItems = profileItems;
-        this.context = context;
+        this.activity = activity;
     }
 
     @Override
@@ -35,8 +39,22 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     @Override
     public void onBindViewHolder(ProfileAdapter.ViewHolder holder, int position) {
         final ProfileItem profileItem = profileItems.get(position);
-        holder.ivPetPic.setImageResource(profileItem.getPetPic());
-        holder.tvLikes.setText(profileItem.getLikes());
+        //holder.ivPetPic.setImageResource(profileItem.getUrlPetPic());
+        holder.tvLikes.setText(String.valueOf(profileItem.getLikes()));
+        Picasso.with(activity)
+                .load(profileItem.getUrlPetPic())
+                .placeholder(R.drawable.dog04)
+                .into(holder.ivPetPic);
+
+        holder.ivPetPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, Detail.class);
+                intent.putExtra("url", profileItem.getUrlPetPic());
+                intent.putExtra("likes", profileItem.getLikes());
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -48,14 +66,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         private ImageView ivPetPic;
         private TextView tvLikes;
-        private ImageView ivFavBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             ivPetPic = itemView.findViewById(R.id.ivPetPic);
             tvLikes = itemView.findViewById(R.id.tvLikes);
-            ivFavBtn = itemView.findViewById(R.id.ivFacBtn);
         }
     }
 }

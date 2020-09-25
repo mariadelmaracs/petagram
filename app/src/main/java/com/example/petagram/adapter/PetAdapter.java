@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petagram.R;
@@ -31,9 +29,8 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
         this.context = context;
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         database = new Database(context);
         SharedPreferences prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
@@ -47,7 +44,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PetAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(PetAdapter.ViewHolder holder, int position) {
         final PetItem petItem = petItems.get(position);
 
         readCursorData(petItem, holder);
@@ -66,7 +63,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
         private TextView    tvPetName;
         private Button      favBtn;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
 
             ivPetPic    = itemView.findViewById(R.id.ivPetPic);

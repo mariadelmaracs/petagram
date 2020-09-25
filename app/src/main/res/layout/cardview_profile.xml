@@ -10,39 +10,44 @@
     android:layout_marginStart="@dimen/cv_profile_margin_start"
     android:layout_marginEnd="@dimen/cv_profile_margin_end"
     android:layout_marginLeft="@dimen/cv_profile_margin_start"
-    android:layout_marginRight="@dimen/cv_profile_margin_end">
-    
+    android:layout_marginRight="@dimen/cv_profile_margin_end"
+    android:layout_marginTop="8dp">
 
-
-    <ImageView
-        android:id="@+id/ivPetPic"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dog_01"/>
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/ivFacBtn"
-        android:layout_width="@dimen/cv_profile_image_width"
-        android:layout_height="@dimen/cv_profile_image_height"
-        android:layout_gravity="bottom|end"
-        android:background="@drawable/ic_red_favorite_24"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="5dp"/>
+        <ImageView
+            android:id="@+id/ivPetPic"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/dog_01"/>
 
-    <TextView
-        android:id="@+id/tvLikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="15dp"
-        android:text="@string/p_likes"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/tvLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/p_likes"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/ivFacBtn"
+                android:layout_width="@dimen/cv_profile_image_width"
+                android:layout_height="@dimen/cv_profile_image_height"
+                android:background="@drawable/ic_red_favorite_24" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>
