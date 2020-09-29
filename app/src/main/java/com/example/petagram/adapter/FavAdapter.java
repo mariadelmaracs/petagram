@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.petagram.R;
 import com.example.petagram.database.Database;
 import com.example.petagram.pojo.FavItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,7 +40,12 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tvFavPetName.setText(favItemsList.get(position).getFavName());
-        holder.ivFavPetPic.setImageResource(favItemsList.get(position).getFavPic());
+        //holder.ivFavPetPic.setImageResource(favItemsList.get(position).getFavPic());
+        Picasso.with(context)
+                .load(favItemsList.get(position).getFavPic())
+                .resize(100, 100)
+                .centerCrop()
+                .into(holder.ivFavPetPic);
     }
 
     @Override

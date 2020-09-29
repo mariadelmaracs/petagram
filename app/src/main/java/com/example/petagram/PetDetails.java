@@ -11,7 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
 
-public class Detail extends AppCompatActivity {
+public class PetDetails extends AppCompatActivity {
 
     private static final String KEY_EXTRA_URL = "url";
     private static final String KEY_EXTRA_LIKES = "likes";

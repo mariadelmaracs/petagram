@@ -1,5 +1,6 @@
 package com.example.petagram.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.petagram.R;
 import com.example.petagram.database.Database;
 import com.example.petagram.pojo.PetItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -48,7 +50,12 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.ViewHolder> {
         final PetItem petItem = petItems.get(position);
 
         readCursorData(petItem, holder);
-        holder.ivPetPic.setImageResource(petItem.getPetPic());
+        //holder.ivPetPic.setImageResource(petItem.getPetPic());
+        Picasso.with(context)
+                .load(petItem.getPetPic())
+                .resize(600, 600)
+                .centerCrop()
+                .into(holder.ivPetPic);
         holder.tvPetName.setText(petItem.getPetName());
     }
 

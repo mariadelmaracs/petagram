@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.petagram.Detail;
+import com.example.petagram.PetDetails;
 import com.example.petagram.R;
 import com.example.petagram.pojo.ProfileItem;
 import com.squareup.picasso.Picasso;
@@ -49,7 +49,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.ivPetPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, Detail.class);
+                Intent intent = new Intent(activity, PetDetails.class);
                 intent.putExtra("url", profileItem.getUrlPetPic());
                 intent.putExtra("likes", profileItem.getLikes());
                 activity.startActivity(intent);
