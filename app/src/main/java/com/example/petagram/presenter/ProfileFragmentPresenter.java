@@ -2,15 +2,13 @@ package com.example.petagram.presenter;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.petagram.fragment.IProfileFragmentView;
 import com.example.petagram.model.PetResponse;
 import com.example.petagram.pojo.ProfileItem;
-import com.example.petagram.presenter.IProfileFragmentPresenter;
-import com.example.petagram.restAPI.EndpointsAPI;
-import com.example.petagram.restAPI.adapter.RestApiAdapter;
+import com.example.petagram.RestApi.EndpointsAPI;
+import com.example.petagram.RestApi.adapter.RestApiAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

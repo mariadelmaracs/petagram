@@ -1,4 +1,4 @@
-package com.example.petagram.restAPI;
+package com.example.petagram.RestApi;
 
 public final class ConstantsRestApi {
 

@@ -1,35 +1,22 @@
 package com.example.petagram.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.petagram.R;
 import com.example.petagram.adapter.ProfileAdapter;
-import com.example.petagram.model.PetResponse;
-import com.example.petagram.pojo.PetItem;
 import com.example.petagram.pojo.ProfileItem;
 import com.example.petagram.presenter.IProfileFragmentPresenter;
 import com.example.petagram.presenter.ProfileFragmentPresenter;
-import com.example.petagram.restAPI.EndpointsAPI;
-import com.example.petagram.restAPI.adapter.RestApiAdapter;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class FragmentProfile extends Fragment implements IProfileFragmentView {
 

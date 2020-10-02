@@ -1,9 +1,9 @@
-package com.example.petagram.restAPI.adapter;
+package com.example.petagram.RestApi.adapter;
 
 import com.example.petagram.model.PetResponse;
-import com.example.petagram.restAPI.ConstantsRestApi;
-import com.example.petagram.restAPI.EndpointsAPI;
-import com.example.petagram.restAPI.deserializador.PetDeserializador;
+import com.example.petagram.RestApi.ConstantsRestApi;
+import com.example.petagram.RestApi.EndpointsAPI;
+import com.example.petagram.RestApi.deserializador.PetDeserializador;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

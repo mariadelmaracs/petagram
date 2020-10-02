@@ -1,9 +1,8 @@
-package com.example.petagram.restAPI.deserializador;
+package com.example.petagram.RestApi.deserializador;
 
 import com.example.petagram.model.PetResponse;
-import com.example.petagram.pojo.PetItem;
 import com.example.petagram.pojo.ProfileItem;
-import com.example.petagram.restAPI.JsonKeys;
+import com.example.petagram.RestApi.JsonKeys;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
