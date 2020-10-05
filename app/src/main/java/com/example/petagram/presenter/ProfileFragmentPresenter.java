@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.petagram.MainActivity;
 import com.example.petagram.fragment.IProfileFragmentView;
 import com.example.petagram.model.PetResponse;
 import com.example.petagram.pojo.ProfileItem;
@@ -41,6 +42,8 @@ public class ProfileFragmentPresenter implements IProfileFragmentPresenter {
                 PetResponse petResponse = response.body();
                 profileItems = petResponse.getProfileItems();
                 mostrarContactosRecyclerView();
+
+                MainActivity.profileItems = profileItems;
             }
 
             @Override

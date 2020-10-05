@@ -13,8 +13,8 @@ import com.squareup.picasso.Picasso;
 
 public class PetDetails extends AppCompatActivity {
 
-    private static final String KEY_EXTRA_URL = "url";
-    private static final String KEY_EXTRA_LIKES = "likes";
+    public static final String KEY_EXTRA_URL = "url";
+    public static final String KEY_EXTRA_LIKES = "likes";
     private ImageView ivPetDetailPic;
     private TextView tvDetailLikes;
 

@@ -1,17 +1,26 @@
 package com.example.petagram;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.example.petagram.RestApi.ConstantsRestApi;
+import com.example.petagram.RestApi.EndpointsAPI;
+import com.example.petagram.RestApi.adapter.RestApiAdapter;
 import com.example.petagram.firebase.MyFirebaseMessagingService;
 import com.example.petagram.firebase.RestApi.EndpointsFirebaseHeroku;
 import com.example.petagram.firebase.adapter.FirebaseHerokuAdapter;
 import com.example.petagram.firebase.model.InstagramResponse;
 import com.example.petagram.firebase.model.UserResponse;
+import com.example.petagram.model.PetResponse;
+import com.example.petagram.pojo.ProfileItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +29,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +43,9 @@ import android.widget.Toast;
 import com.example.petagram.ui.main.SectionsPagerAdapter;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +54,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+
+    public static ArrayList<ProfileItem> profileItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +102,76 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Key: " + key + " Value: " + value);
             }
         }
+
+        profileItems = new ArrayList<>();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                while (true) {
+                    RestApiAdapter restApiAdapter = new RestApiAdapter();
+                    Gson gsonMediaRecent = restApiAdapter.buildGsonDeserializeMediaRecent();
+                    EndpointsAPI endpointsAPI = restApiAdapter.stablishConnectionRestAPInstagram(gsonMediaRecent);
+                    Call<PetResponse> petResponseCall = endpointsAPI.getRecentMedia();
+                    petResponseCall.enqueue(new Callback<PetResponse>() {
+                        @Override
+                        public void onResponse(Call<PetResponse> call, Response<PetResponse> response) {
+                            ArrayList<ProfileItem> newProfileItems = new ArrayList<>();
+                            PetResponse petResponse = response.body();
+                            newProfileItems = petResponse.getProfileItems();
+                            for (int i = 0; i < newProfileItems.size(); i++) {
+                                ProfileItem newProfileItem = newProfileItems.get(i);
+                                for (int j = 0; j < profileItems.size(); j++) {
+                                    ProfileItem oldProfileItem = profileItems.get(j);
+                                    if (newProfileItem.getId().equals(oldProfileItem.getId())) {
+                                        if (newProfileItem.getLikes() > oldProfileItem.getLikes()) {
+                                            System.out.println("Tienes un nuevo like");
+                                            launchNotification(newProfileItem.getUrlPetPic(), newProfileItem.getLikes());
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<PetResponse> call, Throwable t) {
+                            Toast.makeText(MainActivity.this, "Falló la conexión con servidor", Toast.LENGTH_LONG).show();
+                            Log.e("Connection failed", t.toString());
+                        }
+                    });
+                    try {
+                        sleep(20000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        thread.start();
     }
         // [END handle_data_extras]
+
+    public void launchNotification(String url, int likes) {
+        Intent i = new Intent(this, PetDetails.class);
+        i.putExtra(PetDetails.KEY_EXTRA_URL, url);
+        i.putExtra(PetDetails.KEY_EXTRA_LIKES, likes);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_ONE_SHOT);
+
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
+                .setContentTitle("You have a new like!")
+                .setContentText("Click to display it!")
+                .setSound(uri)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0, nBuilder.build());
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
