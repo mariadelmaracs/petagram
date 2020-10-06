@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.petagram">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -27,11 +27,13 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" /> <!-- [END fcm_default_icon] -->
+            android:resource="@color/colorAccent" />
+        <!-- [END fcm_default_icon] -->
         <!-- [START fcm_default_channel] -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" /> <!-- [END fcm_default_channel] -->
+            android:value="@string/default_notification_channel_id" />
+        <!-- [END fcm_default_channel] -->
         <activity
             android:name=".Favorites"
             android:parentActivityName=".MainActivity">

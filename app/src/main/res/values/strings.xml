@@ -23,5 +23,8 @@
     <string name="show_notifications">Show notifications</string>
     <string name="fcm_message">FCM Message</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
-    <string name="default_notification_channel_name" translatable="true">Weather</string>
+    <string name="default_notification_channel_name" translatable="true">Firebase</string>
+    <string name="channelId">my_channel_01</string>
+    <string name="channel_name">Instagram Likes</string>
+    <string name="channel_description">Notifies a new like.</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.petagram;
 
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,11 +13,6 @@ import android.os.Bundle;
 import com.example.petagram.RestApi.ConstantsRestApi;
 import com.example.petagram.RestApi.EndpointsAPI;
 import com.example.petagram.RestApi.adapter.RestApiAdapter;
-import com.example.petagram.firebase.MyFirebaseMessagingService;
-import com.example.petagram.firebase.RestApi.EndpointsFirebaseHeroku;
-import com.example.petagram.firebase.adapter.FirebaseHerokuAdapter;
-import com.example.petagram.firebase.model.InstagramResponse;
-import com.example.petagram.firebase.model.UserResponse;
 import com.example.petagram.model.PetResponse;
 import com.example.petagram.pojo.ProfileItem;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,6 +44,10 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.NotificationCompat.WearableExtender;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -159,18 +157,44 @@ public class MainActivity extends AppCompatActivity {
 
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Action action =
+                new NotificationCompat.Action.Builder(R.drawable.ic_baseline_touch_app_24, "View notification", pendingIntent)
+                .build();
+
+        NotificationCompat.WearableExtender wearableExtender =
+                new NotificationCompat.WearableExtender();
+
+        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this, getString(R.string.channelId))
                 .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
                 .setContentTitle("You have a new like!")
                 .setContentText("Click to display it!")
                 .setSound(uri)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .extend(wearableExtender
+                        .addAction(action));
+                //.addAction(R.drawable.ic_baseline_touch_app_24, "Devuelve el toque", pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // Get an instance of the NotificationManager service
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this);
+
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(getString(R.string.channelId), name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Issue the notification with notification manager.
         notificationManager.notify(0, nBuilder.build());
-
-
     }
 
     @Override

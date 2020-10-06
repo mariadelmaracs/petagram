@@ -1,5 +1,7 @@
 package com.example.petagram.RestApi.adapter;
 
+import com.example.petagram.RestApi.deserializador.BioDeserializer;
+import com.example.petagram.model.BioResponse;
 import com.example.petagram.model.PetResponse;
 import com.example.petagram.RestApi.ConstantsRestApi;
 import com.example.petagram.RestApi.EndpointsAPI;
@@ -23,6 +25,12 @@ public class RestApiAdapter {
     public Gson buildGsonDeserializeMediaRecent() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(PetResponse.class, new PetDeserializador());
+        return gsonBuilder.create();
+    }
+
+    public Gson builGsonDeserializerBioInfo() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(BioResponse.class, new BioDeserializer());
         return gsonBuilder.create();
     }
 }
