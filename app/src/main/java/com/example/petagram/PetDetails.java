@@ -1,7 +1,12 @@
 package com.example.petagram;
 
+import android.app.slice.Slice;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +44,18 @@ public class PetDetails extends AppCompatActivity {
                 .load(url)
                 .placeholder(R.drawable.dog04)
                 .into(ivPetDetailPic);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Slide slide = new Slide(Gravity.TOP);
+            slide.setDuration(500);
+
+
+            getWindow().setEnterTransition(slide);
+
+            getWindow().setReturnTransition(new Fade());
+        } else {
+
+        }
 
         tvDetailLikes = findViewById(R.id.tvDetailLikes);
 

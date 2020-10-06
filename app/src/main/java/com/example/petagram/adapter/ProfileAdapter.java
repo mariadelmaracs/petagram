@@ -3,12 +3,15 @@ package com.example.petagram.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petagram.PetDetails;
@@ -52,7 +55,18 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 Intent intent = new Intent(activity, PetDetails.class);
                 intent.putExtra("url", profileItem.getUrlPetPic());
                 intent.putExtra("likes", profileItem.getLikes());
-                activity.startActivity(intent);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Explode explode = new Explode();
+                    explode.setDuration(1000);
+
+                    activity.getWindow().setExitTransition(explode);
+                    activity.startActivity(intent, ActivityOptionsCompat
+                            .makeSceneTransitionAnimation(activity, view, activity.getString(R.string.pic_transition))
+                            .toBundle());
+                } else {
+                    activity.startActivity(intent);
+                }
             }
         });
     }

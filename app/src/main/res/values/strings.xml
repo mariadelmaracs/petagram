@@ -27,4 +27,5 @@
     <string name="channelId">my_channel_01</string>
     <string name="channel_name">Instagram Likes</string>
     <string name="channel_description">Notifies a new like.</string>
+    <string name="pic_transition">pic transition</string>
 </resources>
